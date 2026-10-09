@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Athaaa! 🎉✨</title>
+
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --pink-primary: #ff9ebb;
+            --pink-soft: #ffd3e2;
+            --pink-dark: #ff6b8b;
+            --pink-accent: #ff477e;
+            --green-primary: #a8e6cf;
+            --green-soft: #dcedc1;
+            --green-dark: #45b082;
+            --green-accent: #2e8b57;
+            --bg-color: #fff8f9;
+            --text-color: #4a4a4a;
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            text-align: center;
+            background-image: 
+                radial-gradient(var(--pink-soft) 20%, transparent 20%), 
+                radial-gradient(var(--green-soft) 20%, transparent 20%);
+            background-position: 0 0, 25px 25px;
+            background-size: 50px 50px;
+            padding-bottom: 50px;
+        }
+
+        /* Floating Background Elements */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 24px;
+            animation: floatUp 8s linear infinite;
+            opacity: 0.7;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) rotate(0deg) scale(0.8); opacity: 1; }
+            50% { transform: translateY(50vh) rotate(180deg) scale(1.1); }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(0.8); opacity: 0; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 25px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Header */
+        header {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            animation: bounceSoft 2.5s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-family: 'Fredoka One', cursive;
+            color: var(--pink-dark);
+            font-size: 3.2rem;
+            text-shadow: 3px 3px 0px var(--green-primary), 6px 6px 0px var(--pink-soft);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .subtitle-badge {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--green-accent);
+            background: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            display: inline-block;
+            box-shadow: 0 6px 15px rgba(255, 158, 187, 0.25);
+            border: 3px solid var(--green-primary);
+        }
+
+        @keyframes bounceSoft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* Audio Floating Control */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            background: white;
+            padding: 10px 18px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border: 3px solid var(--pink-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-player:hover {
+            transform: scale(1.08);
+            border-color: var(--green-dark);
+        }
+
+        .music-icon {
+            font-size: 20px;
+            color: var(--pink-dark);
+        }
+
+        /* Cake Section */
+        .card-box {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 30px 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(255, 158, 187, 0.2);
+            border: 4px solid white;
+            backdrop-filter: blur(5px);
+        }
+
+        .section-heading {
+            font-family: 'Fredoka One', cursive;
+            color: var(--pink-dark);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .cake-wrapper {
+            position: relative;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin: 20px 0 30px;
+        }
+
+        .cake {
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(to bottom, var(--pink-primary), var(--pink-dark));
+            border-radius: 20px 20px 10px 10px;
+            position: relative;
+            box-shadow: 0 8px 0 var(--pink-accent), 0 15px 20px rgba(0,0,0,0.1);
+            border: 4px solid white;
+        }
+
+        .cake-cream {
+            height: 35px;
+            background: var(--green-primary);
+            width: 100%;
+            position: absolute;
+            top: 40px;
+            border-top: 4px solid white;
+            border-bottom: 4px solid white;
+            box-shadow: inset 0 -3px 0 var(--green-dark);
+        }
+
+        .cake-topping {
+            position: absolute;
+            top: -12px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .cherry {
+            width: 22px;
+            height: 22px;
+            background: #ff3366;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+        .candle {
+            width: 18px;
+            height: 55px;
+            background: repeating-linear-gradient(45deg, var(--green-dark), var(--green-dark) 8px, white 8px, white 16px);
+            position: absolute;
+            top: -55px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .flame {
+            width: 18px;
+            height: 28px;
+            background: linear-gradient(to top, #ff9900, #ffea00);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -28px;
+            left: 0;
+            box-shadow: 0 0 20px #ffea00, 0 0 35px #ff9900;
+            animation: flameFlicker 0.6s infinite alternate;
+        }
+
+        .flame.off {
+            display: none;
+        }
+
+        .smoke {
+            display: none;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            animation: smokeRise 1.5s forwards;
+        }
+
+        @keyframes flameFlicker {
+            0% { transform: scale(1) rotate(-2deg); }
+            100% { transform: scale(1.15) rotate(2deg); }
+        }
+
+        @keyframes smokeRise {
+            0% { opacity: 0.8; transform: translateX(-50%) translateY(0) scale(0.8); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(1.5); }
+        }
+
+        /* Action Buttons */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-custom {
+            background: var(--pink-dark);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 var(--pink-accent), 0 8px 15px rgba(255, 71, 126, 0.3);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 var(--pink-accent), 0 12px 20px rgba(255, 71, 126, 0.4);
+        }
+
+        .btn-custom:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 var(--pink-accent);
+        }
+
+        .btn-green {
+            background: var(--green-dark);
+            box-shadow: 0 6px 0 var(--green-accent), 0 8px 15px rgba(46, 139, 87, 0.3);
+        }
+
+        .btn-green:hover {
+            box-shadow: 0 9px 0 var(--green-accent), 0 12px 20px rgba(46, 139, 87, 0.4);
+        }
+
+        .btn-green:active {
+            box-shadow: 0 2px 0 var(--green-accent);
+        }
+
+        /* Gift Surprise */
+        .gift-container {
+            margin: 20px 0;
+        }
+
+        .gift-box-icon {
+            font-size: 85px;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: giftPulse 1.8s infinite;
+            filter: drop-shadow(0 8px 15px rgba(255, 107, 139, 0.3));
+        }
+
+        .gift-box-icon:hover {
+            transform: scale(1.25) rotate(8deg);
+        }
+
+        @keyframes giftPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1) rotate(-3deg); }
+        }
+
+        /* Polaroid Photo Gallery */
+        .gallery-grid {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .polaroid-card {
+            background: white;
+            padding: 14px 14px 25px 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            width: 200px;
+            transform: rotate(-3deg);
+            transition: all 0.35s ease;
+            border: 3px solid var(--pink-soft);
+            position: relative;
+        }
+
+        .polaroid-card:nth-child(even) {
+            transform: rotate(4deg);
+            border-color: var(--green-soft);
+        }
+
+        .polaroid-card:nth-child(3n) {
+            transform: rotate(-2deg);
+        }
+
+        .polaroid-card:hover {
+            transform: scale(1.12) rotate(0deg);
+            z-index: 10;
+            box-shadow: 0 15px 30px rgba(255, 107, 139, 0.25);
+            border-color: var(--pink-primary);
+        }
+
+        .polaroid-frame {
+            width: 100%;
+            height: 170px;
+            background-color: var(--green-soft);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+            overflow: hidden;
+            border: 2px solid #f0f0f0;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .polaroid-text {
+            margin-top: 12px;
+            font-family: 'Sacramento', cursive;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--pink-dark);
+        }
+
+        /* Interactive Balloon Game */
+        .balloon-canvas {
+            height: 160px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: linear-gradient(to bottom, rgba(255,211,226,0.3), rgba(220,237,193,0.3));
+            border: 2px dashed var(--pink-primary);
+            margin-top: 15px;
+        }
+
+        .balloon-item {
+            font-size: 45px;
+            position: absolute;
+            bottom: -60px;
+            cursor: pointer;
+            animation: riseUp 5.5s linear infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            transition: transform 0.1s;
+        }
+
+        .balloon-item:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes riseUp {
+            0% { bottom: -60px; opacity: 1; }
+            100% { bottom: 180px; opacity: 0; }
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-box {
+            background: white;
+            padding: 35px 28px;
+            border-radius: 30px;
+            max-width: 520px;
+            width: 90%;
+            border: 6px solid var(--pink-primary);
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--pink-dark);
+        }
+
+        .modal-title {
+            font-family: 'Fredoka One', cursive;
+            color: var(--pink-dark);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-body {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: #888;
+            font-weight: 600;
+        }
+
+        footer span {
+            color: var(--pink-dark);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Hearts/Flowers -->
+    <div class="heart-bg" id="floatingBg"></div>
+
+    <!-- Music Player Controls -->
+    <div class="music-player" onclick="toggleMusic()" id="musicBtn">
+        <i class="fa-solid fa-music music-icon"></i>
+        <span id="musicText" style="font-weight: 700; color: var(--pink-dark); font-size: 0.95rem;">Putar Lagu 🎵</span>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1 class="main-title">Happy Birthday! 🎂✨</h1>
+            <div class="subtitle-badge">
+                <i class="fa-solid fa-heart" style="color: var(--pink-dark);"></i> 
+                Special Day! 🌿🌸
+            </div>
+        </header>
+
+        <!-- Birthday Cake Section -->
+        <div class="card-box">
+            <h2 class="section-heading">Make a Wish & Blow the Candle! 🕯️</h2>
+            
+            <div class="cake-wrapper">
+                <div class="cake">
+                    <div class="cake-topping">
+                        <div class="cherry"></div>
+                        <div class="cherry"></div>
+                        <div class="cherry"></div>
+                        <div class="cherry"></div>
+                    </div>
+                    <div class="candle" id="candle" onclick="blowCandle()">
+                        <div class="flame" id="flame"></div>
+                        <div class="smoke" id="smoke">💨</div>
+                    </div>
+                    <div class="cake-cream"></div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-custom" onclick="blowCandle()">
+                    <i class="fa-solid fa-wind"></i> Tiup Lilin!
+                </button>
+                <button class="btn-custom btn-green" onclick="triggerConfetti()">
+                    <i class="fa-solid fa-party-horn"></i> Sebar Konfeti!
+                </button>
+            </div>
+        </div>
+
+        <!-- Gift Box Section -->
+        <div class="card-box">
+            <h2 class="section-heading">Kado Special Buat Kamu! 🎁</h2>
+            <p style="color: #666; margin-bottom: 15px;">Klik kadonya buat buka pesan rahasia di dalamnya ✨</p>
+            <div class="gift-container">
+                <div class="gift-box-icon" onclick="openGiftModal()">🎁</div>
+            </div>
+        </div>
+
+        <!-- Polaroid Photo Gallery -->
+        <div class="card-box">
+            <h2 class="section-heading" style="color: var(--green-dark);">Our Best Moments 📸</h2>
+            <p style="color: #666; margin-bottom: 10px;">Hover/Sentuh foto buat lihat efek lucunya!</p>
+            
+            <div class="gallery-grid">
+                <div class="polaroid-card">
+                    <div class="polaroid-frame"><img src="assets/foto3.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="polaroid-text">Atha</div>
+                </div>
+                <div class="polaroid-card">
+                    <div class="polaroid-frame"><img src="assets/foto1.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="polaroid-text">Buguru</div>
+                </div>
+                <div class="polaroid-card">
+                    <div class="polaroid-frame"><img src="assets/foto2.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="polaroid-text">kuncir</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Balloon Pop Game -->
+        <div class="card-box">
+            <h2 class="section-heading">Pop the Balloons! 🎈</h2>
+            <p style="color: #666;">Klik balon-balon yang terbang buat meletuskannya!</p>
+            <div class="balloon-canvas" id="balloonCanvas"></div>
+        </div>
+
+        <footer>
+            Dibuat pink & hijau khusus untuk hari spesialmu!
+        </footer>
+    </div>
+
+    <!-- Modal Box for Gift Message -->
+    <div class="modal-overlay" id="giftModal">
+        <div class="modal-box">
+            <span class="modal-close-btn" onclick="closeGiftModal()">&times;</span>
+            <h2 class="modal-title">Happy Birthday! 🎉🎀</h2>
+            <div class="modal-body">
+                Selamat ulang tahun ya! 🌸<br><br>
+                selamat udah kepala 2 Semoga di usiamu yang baru ini kamu selalu diberikan kesehatan, kebahagiaan yang melimpah, dan semua impian serta cita-citamu tercapai! 
+                <br><br>
+                Makasih ya buat sebelumnya udah repot2 ngeluangin waktu buat ngajarin sesuatu, makasih juga udah jadi temen yang seru, baik, dan menyenangakan. Tetap jadi pribadi yang ceria yh! 🌿✨
+            </div>
+            <button class="btn-custom" onclick="closeGiftModal()">Aamiin! Terima Kasih 💕</button>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts & Flowers Generator
+        const bgContainer = document.getElementById('floatingBg');
+        const icons = ['🌸', '🌿', '💖', '✨', '🎀', '🍀', '🌷', '💕'];
+
+        for(let i = 0; i < 25; i++) {
+            let elem = document.createElement('div');
+            elem.className = 'floating-element';
+            elem.innerText = icons[Math.floor(Math.random() * icons.length)];
+            elem.style.left = Math.random() * 95 + 'vw';
+            elem.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            elem.style.animationDelay = (Math.random() * 5) + 's';
+            bgContainer.appendChild(elem);
+        }
+
+        // Blow Candle Logic
+        let candleIsBlown = false;
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            const smoke = document.getElementById('smoke');
+            
+            if(!candleIsBlown) {
+                flame.classList.add('off');
+                smoke.style.display = 'block';
+                candleIsBlown = true;
+                
+                // Trigger celebratory confetti
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+
+                setTimeout(() => {
+                    smoke.style.display = 'none';
+                }, 1500);
+
+                alert('Yayy! Lilin berhasil ditiup! 🎂 Make a wish ya! ✨');
+            } else {
+                flame.classList.remove('off');
+                candleIsBlown = false;
+            }
+        }
+
+        // Confetti Trigger
+        function triggerConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff9ebb', '#a8e6cf', '#ff6b8b', '#ffd3e2', '#56ab2f']
+            });
+        }
+
+        // Gift Modal Controls
+        function openGiftModal() {
+            document.getElementById('giftModal').style.display = 'flex';
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.5 }
+            });
+        }
+
+        function closeGiftModal() {
+            document.getElementById('giftModal').style.display = 'none';
+        }
+
+        // Balloon Pop Game Logic
+        const balloonCanvas = document.getElementById('balloonCanvas');
+        const balloonEmojis = ['🎈', '🎀', '🌸', '🎁', '✨', '🎈'];
+
+        function spawnBalloon() {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon-item';
+            balloon.innerText = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+            balloon.style.left = Math.random() * 85 + 5 + '%';
+            balloon.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            
+            balloon.onclick = function(e) {
+                const rect = balloon.getBoundingClientRect();
+                const x = (rect.left + rect.width / 2) / window.innerWidth;
+                const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+                confetti({
+                    particleCount: 35,
+                    spread: 60,
+                    origin: { x: x, y: y }
+                });
+                balloon.remove();
+            };
+
+            balloonCanvas.appendChild(balloon);
+
+            setTimeout(() => {
+                if(balloon.parentNode) balloon.remove();
+            }, 6000);
+        }
+
+        setInterval(spawnBalloon, 1200);
+
+        // Web Audio Synthesizer (Happy Birthday Melody)
+        let isPlayingAudio = false;
+        let audioCtx = null;
+
+        function toggleMusic() {
+            const musicText = document.getElementById('musicText');
+            if (!isPlayingAudio) {
+                playBirthdaySong();
+                musicText.innerText = "Lagu Memutar... 🎶";
+                isPlayingAudio = true;
+                setTimeout(() => {
+                    isPlayingAudio = false;
+                    musicText.innerText = "Putar Lagu 🎵";
+                }, 12000);
+            }
+        }
+
+        function playBirthdaySong() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = [264, 264, 297, 264, 352, 330, 264, 264, 297, 264, 396, 352];
+            const durations = [0.4, 0.4, 0.8, 0.8, 0.8, 1.2, 0.4, 0.4, 0.8, 0.8, 0.8, 1.2];
+
+            let time = audioCtx.currentTime;
+            notes.forEach((freq, i) => {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.12, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + durations[i]);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(time);
+                osc.stop(time + durations[i]);
+                time += durations[i];
+            });
+
+            triggerConfetti();
+        }
+    </script>
+</body>
+</html>
